@@ -6,7 +6,8 @@ function App() {
   // Fetch data from the Flask Backend
   const fetchActions = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/actions-list')
+      const API_BASE = import.meta.env.VITE_API_URL
+      const response = await fetch(`${API_BASE}/api/actions-list`)
       const data = await response.json()
       setActions(data)
     } catch (err) {
