@@ -17,27 +17,34 @@ function App() {
 
   useEffect(() => {
     fetchActions()
-    // Poll the MongoDB database every 15 seconds as required
-    const interval = setInterval(fetchActions, 15000) 
+    // Poll the MongoDB database every 15 seconds
+    const interval = setInterval(fetchActions, 15000)
     return () => clearInterval(interval)
   }, [])
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] flex justify-center py-16 px-6 font-sans antialiased">
       <div className="w-full max-w-xl">
-        
+
         {/* Header Section with Live Indicator */}
         <header className="flex items-center justify-between mb-12">
           <div>
-            <h1 className="text-3xl font-black text-slate-900 tracking-tight lowercase">Activity</h1>
-            <p className="text-slate-500 text-sm mt-1">Updates every 15 seconds</p>
+            <h1 className="text-3xl font-bold text-slate-900 tracking-tight">
+              Real-time GitHub Webhook Monitor
+            </h1>
+            <p className="text-slate-500 text-sm font-medium mt-1">
+              Tracking repository activity as it happens
+            </p>
           </div>
-          <div className="flex items-center gap-2 px-3 py-1.5 bg-white border border-slate-200 rounded-full shadow-xs">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-            </span>
-            <span className="text-[10px] font-bold text-slate-600 uppercase tracking-widest">Live</span>
+
+          <div className="flex flex-col items-end gap-1">
+            <div className="flex items-center gap-2 px-3 py-1.5">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+              </span>
+              <span className="text-[10px] font-bold text-slate-600 uppercase tracking-widest">Live</span>
+            </div>
           </div>
         </header>
 
@@ -47,11 +54,10 @@ function App() {
             actions.map((item, index) => (
               <div key={item.request_id || index} className="relative pl-10 group">
                 {/* Visual Dot Indicator */}
-                <div className={`absolute -left-[11px] top-1.5 h-5 w-5 rounded-full border-4 border-[#F8FAFC] shadow-sm transition-transform group-hover:scale-125 ${
-                  item.action === 'PUSH' ? 'bg-indigo-500' : 
-                  item.action === 'MERGE' ? 'bg-fuchsia-500' : 'bg-emerald-500'
-                }`} />
-                
+                <div className={`absolute -left-[11px] top-1.5 h-5 w-5 rounded-full border-4 border-[#F8FAFC] shadow-sm transition-transform group-hover:scale-125 ${item.action === 'PUSH' ? 'bg-indigo-500' :
+                    item.action === 'MERGE' ? 'bg-fuchsia-500' : 'bg-emerald-500'
+                  }`} />
+
                 {/* Content Card */}
                 <div className="bg-white/80 backdrop-blur-md p-6 rounded-2xl border border-slate-200 shadow-sm transition-all hover:shadow-md hover:border-slate-300">
                   <div className="flex items-baseline gap-1.5 text-slate-700 leading-relaxed">
@@ -60,7 +66,7 @@ function App() {
                     </span>
                     <ActionSentence item={item} />
                   </div>
-                  
+
                   {/* Timestamp and ID Footer */}
                   <div className="mt-4 pt-4 border-t border-slate-50 flex justify-between items-center">
                     <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
@@ -89,7 +95,7 @@ function App() {
  */
 const ActionSentence = ({ item }) => {
   const branchStyle = "px-1.5 py-0.5 bg-slate-100 rounded text-slate-900 font-mono text-sm font-semibold border border-slate-200"
-  
+
   if (item.action === 'PUSH') {
     return (
       <span className="text-sm">
