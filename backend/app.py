@@ -47,7 +47,7 @@ def get_date_suffix(day):
     
     
 #Endpoint to receive, parse, and store GitHub Push and Pull Request events.
-@app.route('/webhook', methods=['POST'])
+@app.route('/webhook/receiver', methods=['POST'])
 def github_webhook():
     event_type = request.headers.get('X-GitHub-Event') # Get event type from headers
     data = request.get_json() # Parse JSON payload
